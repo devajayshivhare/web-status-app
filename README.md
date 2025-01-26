@@ -12,3 +12,8 @@ php artisan db:seed
 /users
 /roles
 /permissions
+
+# CMS Portal Default User and Password
+
+email:admin@example.com
+password:password
