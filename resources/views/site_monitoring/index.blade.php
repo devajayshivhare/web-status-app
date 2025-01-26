@@ -1,7 +1,13 @@
 <x-layout>
+    @if (Auth()->user()->can('view dashboard'))
+    <a href="{{ route('users.index') }}" class="btn btn-info">Go to CMS PORTAL</a>
+    @endif
+
     <div class="d-flex justify-content-between align-items-center mt-3">
         <a href="{{ route('site_monitoring.create') }}" class="btn btn-primary">Add New Site</a>
+        @if (Auth()->user()->can('view logs'))
         <div id="custom-buttons" class=""></div>
+        @endif
     </div>
     <div class="d-flex justify-content-between mt-3 mb-3 bg-body-tertiary">
             <p>Site URL</p><a target="_blank" href="{{$sites[0]->site_url}}">{{$sites[0]->site_url}}</a>
@@ -13,17 +19,12 @@
             <th>Id</th>
             <th>TimeStamp</th>
             <th>Status Log</th>
-            {{-- <th><a 
-                {{-- href="{{ route('site_monitoring.exportLogs', $site->id) }}"  --}}
-                {{-- class="btn btn-success btn-sm">Export Logs</a></th> --}}
         </tr> 
     </thead>
     <tbody>
-        {{-- @dd($sites) --}}
         @foreach ($sites as $site)
                 <tr>
-                    {{-- <td>{{ $site->site_url }}</td> --}}
-                    {{-- <td>{{ $site->task_frequency }}</td> --}}
+                    
                     <td>
                         <ul>
                             @foreach ($site->logs as $log)
@@ -38,9 +39,6 @@
                                 @endforeach
                             </ul>
                         </td>
-                    {{-- <td>
-                        
-                    </td> --}}
                 </tr>
                 @endforeach
        

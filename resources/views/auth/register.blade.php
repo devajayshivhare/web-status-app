@@ -35,11 +35,9 @@ action="{{ url('/register') }}"
 @enderror
 </div>
 
-{{-- <button class="btn btn-primary">Left Button</button> --}}
 <div class="d-flex justify-content-between">
     <button type="submit" class="btn btn-primary">Register</button>
     <a class="me-2" href="{{route('login')}}">Login</a>
-    {{-- <button class="btn btn-success">Right Button</button> --}}
 </div>
 </form>
 </x-layout>
