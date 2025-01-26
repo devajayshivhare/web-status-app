@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\LogController;
+use App\Http\Controllers\SiteMonitoringController;
+use App\Http\Controllers\ChatbotController;
 
 // Route::get('/h', function () {
 //     return view('dashboard');
@@ -13,9 +15,7 @@ use App\Http\Controllers\AuthController;
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [SiteMonitoringController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 });
 
@@ -28,3 +28,11 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [AuthController::class, 'login_store']);
     //Logout
 });
+
+
+Route::resource('site_monitoring', SiteMonitoringController::class);
+
+Route::get('/users/log', [LogController::class, 'getLogs'])->name('users.log');
+
+Route::post('/chatbot/message', [ChatbotController::class, 'getMessage']);
+
