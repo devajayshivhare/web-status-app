@@ -10,3 +10,5 @@ php artisan db:seed
 
 # CMS Portal access:
 /users
+/roles
+/permissions
