@@ -31,10 +31,10 @@ Route::get('/users/log', [LogController::class, 'getLogs'])->name('users.log');
 Route::post('/chatbot/message', [ChatbotController::class, 'getMessage']);
 
 
-Route::middleware(['role:Admin'])->group(function () {
+// Route::middleware(['role:Admin'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('users', UserController::class);
     Route::post('roles/{role}/permissions', [RoleController::class, 'assignPermissions'])->name('roles.permissions.assign');
     Route::post('users/{user}/roles', [RoleController::class, 'assignRolesToUser'])->name('users.roles.assign');
-});
+// });

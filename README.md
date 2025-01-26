@@ -6,3 +6,7 @@ php artisan schedule:work
 
 
 php artisan db:seed
+
+
+# CMS Portal access:
+/users
