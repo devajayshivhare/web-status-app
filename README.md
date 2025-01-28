@@ -1,7 +1,7 @@
 ## Web Status App
 # steps:
 php artisan serve
-/php artisan dev
+/npm run dev
 /php artisan schedule:work
 
 

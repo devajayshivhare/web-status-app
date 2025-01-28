@@ -10,7 +10,8 @@ class SiteMonitoringController extends Controller
 {
     public function index()
     {
-        $sites = SiteMonitoring::with('logs')->get();
+        // $sites = SiteMonitoring::latest()->first()->with('logs')->get();
+        $sites = SiteMonitoring::with('logs')->latest()->first();
         // dd($sites);
         return view('site_monitoring.index', compact('sites'));
     }

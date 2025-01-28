@@ -5,13 +5,16 @@
 
     <div class="d-flex justify-content-between align-items-center mt-3">
         <a href="{{ route('site_monitoring.create') }}" class="btn btn-primary">Add New Site</a>
-        @if (Auth()->user()->can('view logs'))
+        {{-- @if (Auth()->user()->can('view logs')) --}}
         <div id="custom-buttons" class=""></div>
-        @endif
+        {{-- @endif --}}
     </div>
     <div class="d-flex justify-content-between mt-3 mb-3 bg-body-tertiary">
-            <p>Site URL</p><a target="_blank" href="{{$sites[0]->site_url}}">{{$sites[0]->site_url}}</a>
-            <p>Frequency (minutes)</p>: {{$sites[0]->task_frequency}}
+        {{-- @dd($sites) --}}
+            {{-- <p>Site URL</p><a target="_blank" href="{{$sites[0]->site_url}}">{{$sites[0]->site_url}}</a>
+            <p>Frequency (minutes)</p>: {{$sites[0]->task_frequency}} --}}
+            <p>Site URL</p><a target="_blank" href="{{$sites->site_url}}">{{$sites->site_url}}</a>
+            <p>Frequency (minutes)</p>: {{$sites->task_frequency}}
     </div>
 <table id="example" class="display" style="width:100%">
     <thead>
@@ -22,25 +25,26 @@
         </tr> 
     </thead>
     <tbody>
-        @foreach ($sites as $site)
-                <tr>
+        {{-- @foreach ($sites->log as $site) --}}
+        {{-- @dd($site) --}}
+                {{-- <tr>
                     
                     <td>
                         <ul>
-                            @foreach ($site->logs as $log)
+                            @foreach ($sites->logs as $log)
                             <li>{{ $log->checked_at }}</li>
                             @endforeach
                         </ul>
                     </td>
                         <td>
                             <ul>
-                                @foreach ($site->logs as $log)
+                                @foreach ($sites->logs as $log)
                                 <li>{{ $log->status }}</li>
                                 @endforeach
                             </ul>
                         </td>
-                </tr>
-                @endforeach
+                </tr> --}}
+                {{-- @endforeach --}}
        
         
     </tbody>

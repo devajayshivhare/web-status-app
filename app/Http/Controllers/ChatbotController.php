@@ -10,7 +10,6 @@ class ChatbotController extends Controller
     {
         $message = $request->input('message');
 
-        // Simple bot logic (can be replaced with AI integration)
         $responses = [
             'hello' => 'Hi there! How can I help you?',
             'hi' => 'Hello! How can I help you?',
