@@ -8,6 +8,7 @@ use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\RoleMiddleware;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [SiteMonitoringController::class, 'index'])->name('dashboard');
@@ -30,11 +31,14 @@ Route::get('/users/log', [LogController::class, 'getLogs'])->name('users.log');
 
 Route::post('/chatbot/message', [ChatbotController::class, 'getMessage']);
 
+// Route::resource('users', UserController::class)->middleware([RoleMiddleware::class.':admin', 'auth']);
 
-// Route::middleware(['role:Admin'])->group(function () {
+Route::middleware([RoleMiddleware::class.':Admin'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
-    Route::resource('users', UserController::class);
+    // Route::middleware(['auth', 'role:admin'])->group(function () {
+        Route::resource('users', UserController::class);
+    // });
     Route::post('roles/{role}/permissions', [RoleController::class, 'assignPermissions'])->name('roles.permissions.assign');
     Route::post('users/{user}/roles', [RoleController::class, 'assignRolesToUser'])->name('users.roles.assign');
-// });
+});

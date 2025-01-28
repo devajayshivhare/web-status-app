@@ -1,5 +1,7 @@
-<x-layout>
-<div class="container">
+    @extends('layout.master')
+    @section('content')
+        
+<div class="container" style="max-width: 50%">
     <h2 class="text-center mt-2">Add a Site for Monitoring</h2>
     <form action="{{ route('site_monitoring.store') }}" method="POST">
         @csrf
@@ -14,4 +16,5 @@
         <button type="submit" class="btn btn-success mt-3">Add Site</button>
     </form>
 </div>
-</x-layout>
+@endsection
+

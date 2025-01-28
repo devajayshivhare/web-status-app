@@ -14,18 +14,11 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
-          // Check if the user is authenticated
-        //   if (Auth::check()) {
-        //     abort(403, 'Unauthorized access');
-        // }
-
-        // // Check if the authenticated user has the specified role
-        // // dd($request->user()->hasRole($role));
-        // if (! $request->user()->hasRole('Admin')) {
-        //     abort(403, 'Unauthorized access');
-        // }
+        if (!Auth::check() && Auth::user()->role !== $role) {
+            abort(403, 'Unauthorized access');
+        }
 
         return $next($request);
     }

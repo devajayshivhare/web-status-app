@@ -28,32 +28,34 @@ class MonitorSite extends Command
      */
     public function handle()
     {
-         // Fetch the latest site
-         $site = SiteMonitoring::latest()->first();
-        //  logger(now()->minute % $site->task_frequency === 0);
-         logger(now()->minute." minutes");
-         logger($site->task_frequency." task frequency");
-         if ($site && now()->minute % $site->task_frequency === 0) {
-             $this->info("Monitoring site: {$site->site_url}");
-             
-             try {
-                 // Send an HTTP request to check the site status
-                 $response = Http::get($site->site_url);
-                 $status = $response->successful() ? 'up' : 'down';
-             } catch (\Exception $e) {
-                 $status = 'down';
-             }
- 
-             // Log the result in the database
-             SiteLog::create([
-                 'site_monitoring_id' => $site->id,
-                 'status' => $status,
-                 'checked_at' => now(),
-             ]);
- 
-             $this->info("Site status logged as: {$status}");
-         } else {
-             $this->warn("No sites found for monitoring.");
-         }
+        $sites = SiteMonitoring::all();
+
+        if ($sites->isEmpty()) {
+            $this->warn("No sites found for monitoring.");
+            return;
+        }
+
+        foreach ($sites as $site) {
+            if (now()->minute % $site->task_frequency === 0) {
+                $this->info("Monitoring site: {$site->site_url}");
+
+                try {
+                    $response = Http::get($site->site_url);
+                    $status = $response->successful() ? 'up' : 'down';
+                } catch (\Exception $e) {
+                    $status = 'down';
+                }
+
+                SiteLog::create([
+                    'site_monitoring_id' => $site->id,
+                    'status' => $status,
+                    'checked_at' => now(),
+                ]);
+
+                $this->info("Site status for {$site->site_url} logged as: {$status}");
+            } else {
+                $this->info("Skipping site: {$site->site_url} (Frequency mismatch)");
+            }
+        }
     }
 }

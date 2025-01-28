@@ -40,9 +40,10 @@ class RolesAndPermissionsSeeder extends Seeder
  
          // Create Default Admin User
          \App\Models\User::factory()->create([
-             'name' => 'Admin User',
+             'name' => 'Admin',
              'email' => 'admin@example.com',
              'password' => bcrypt('password'),
+             'role' => 'admin',
          ])->assignRole($adminRole);
  
          // Create Default Regular User

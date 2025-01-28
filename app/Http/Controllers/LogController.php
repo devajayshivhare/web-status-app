@@ -14,14 +14,26 @@ class LogController extends Controller
      */
     public function getLogs()
     {
-        $latestSiteMonitoring = SiteMonitoring::latest()->first();
-        $logs = SiteLog::where('site_monitoring_id', $latestSiteMonitoring->id)
-        ->with('siteMonitoring')
-        ->get();
+        // $latestSiteMonitoring = SiteMonitoring::latest()->first();
+        // $logs = SiteLog::where('site_monitoring_id', $latestSiteMonitoring->id)
+        // ->with('siteMonitoring')
+        // ->get();
 
         // $logs = SiteLog::with('siteMonitoring')->get();
         // dd($logs);
-        return DataTables::of($logs)->make(true);
+
+        $logs = SiteMonitoring::with(['logs' => function($query) {
+            $query->latest()->first(); // Fetch latest log for this site
+        }])->get();
+        // return DataTables::of($logs)->make(true);
+        return DataTables::of($logs)
+        ->addColumn('status', function ($site) {
+            return $site->logs->count() > 0 ? $site->logs[0]->status : 'NA';
+        })
+        ->addColumn('checked_at', function ($site) {
+            return $site->logs->count() > 0 ? $site->logs[0]->checked_at : 'NA';
+        })
+        ->make(true);
     }
    
 }

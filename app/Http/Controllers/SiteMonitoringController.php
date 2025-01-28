@@ -6,14 +6,21 @@ use App\Models\SiteMonitoring;
 use App\Models\SiteLog;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class SiteMonitoringController extends Controller
 {
     public function index()
     {
-        // $sites = SiteMonitoring::latest()->first()->with('logs')->get();
-        $sites = SiteMonitoring::with('logs')->latest()->first();
-        // dd($sites);
-        return view('site_monitoring.index', compact('sites'));
+        // $sites = SiteMonitoring::with('logs')->latest()->first();
+        // $sites = SiteMonitoring::with('logs')->get();
+
+        $sites = SiteMonitoring::with(['logs' => function($query) {
+            $query->latest()->first(); // Fetch latest log for this site
+        }])->get();
+        
+        // return view('site_monitoring.index', compact('sites'));
+        return view('dashboard', compact('sites'));
     }
 
     public function create()
