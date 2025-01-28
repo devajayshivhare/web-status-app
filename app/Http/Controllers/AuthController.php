@@ -43,7 +43,7 @@ class AuthController extends Controller
 
         if (!Auth::attempt($attributes)) {
             throw ValidationException::withMessages([
-                'email' => 'Invalid Credentials'
+                'custom_error' => 'Invalid Credentials'
             ]);
         }
 

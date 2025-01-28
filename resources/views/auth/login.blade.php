@@ -21,11 +21,16 @@ action="{{ url('/login') }}"
     @error('password')
     <div class="text-danger">{{ $message }}</div>
 @enderror
+    
   </div>
 
 <div class="d-flex justify-content-between">
   <button type="submit" class="btn btn-primary">Login</button>
   <a href="{{route('register')}}">Register</a>
 </div>
+
+@error('custom_error')
+    <div class="text-danger text-center">{{ $message }}</div>
+@enderror
 </form>
 </x-layout>
