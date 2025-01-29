@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,25 +16,36 @@
     {{-- @vite(['resources/css/app.css'])   --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-         /* body {
+        body{
+            height: 100vh;
+            margin: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
+
         }
 
-        main {
+        /* .wrapper {
             flex: 1;
         } */
 
-        footer{
-            position:absolute;
-            bottom: 0;
-            width: 100%;
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto;
         }
+
+        /* //// */
+        .active>.page-link{
+            background-color: #0B3D91
+        }
+        /* //// */
+
         /* Navbar Styling */
         .navbar {
-            background-color: #0B3D91; /* Dark Blue */
+            background-color: #0B3D91;
+            /* Dark Blue */
             padding: 15px 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
@@ -52,12 +64,14 @@
         }
 
         .navbar-nav .nav-link:hover {
-            color: #FFC107; /* Gold Hover Effect */
+            color: #FFC107;
+            /* Gold Hover Effect */
         }
 
         /* Logout Button Styling */
         .logout-btn {
-            background-color: #DC3545; /* Red */
+            background-color: #DC3545;
+            /* Red */
             color: white;
             font-weight: bold;
             border-radius: 5px;
@@ -66,7 +80,8 @@
         }
 
         .logout-btn:hover {
-            background-color: #B02A37; /* Darker Red on Hover */
+            background-color: #B02A37;
+            /* Darker Red on Hover */
         }
 
         /* Mobile-Friendly */
@@ -74,6 +89,7 @@
             .navbar-nav {
                 text-align: center;
             }
+
             .logout-btn {
                 display: block;
                 width: 100%;
@@ -82,7 +98,18 @@
         }
 
         .new-site-btn {
-            background-color: #1A56D0; /* Matching Blue */
+            background-color: #1A56D0;
+            /* Matching Blue */
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            padding: 8px 15px;
+            transition: 0.3s;
+            border: none;
+        }
+        .excel-btn {
+            /* background-color: #1A56D0; */
+            /* Matching Blue */
             color: white;
             font-weight: bold;
             border-radius: 5px;
@@ -92,53 +119,50 @@
         }
 
         .new-site-btn:hover {
-            background-color: #0A3D7A; /* Darker Blue on Hover */
+            background-color: #0A3D7A;
+            /* Darker Blue on Hover */
         }
     </style>
 </head>
-<body>
-    <header>
-         <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <!-- Left Side - Logo -->
-                <a class="navbar-brand" href="#">CMS</a>
-        
-                <!-- Navbar Toggler for Mobile -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-        
-                <!-- Center Navigation Items -->
-                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                    <ul class="navbar-nav">
-                        @if (Auth()->user()->role !== 'admin')
-                        <li class="nav-item"><a class="nav-link" href="{{url('/users')}}">Role</a></li>
-                        @endif
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
-                                Services
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Service 1</a></li>
-                                <li><a class="dropdown-item" href="#">Service 2</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                    </ul>
-                </div>
-        <div class="d-flex" style="">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn logout-btn" style="position: absolute; right: 20px; top: 25px;">
-                        <i class="fas fa-power-off"></i>
-                    </button>
-                </form>
-                <p class="fs-2 mb-1 text-white">
-                    {{Auth()->user()->name}}({{Auth()->user()->role}})
-                    <i class="bi bi-person-circle"></i>
-                </p>
-            </div>
-        </div>
 
-        </nav>
-    </header>
+<body>
+    @auth
+        <header>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <a class="navbar-brand" href="#">CMS</a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            @if (Auth()->user() && Auth()->user()->role === 'admin')
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/users') }}">Role</a></li>
+                            @endif
+
+                        </ul>
+                    </div>
+                    <div class="d-flex" style="">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn logout-btn"
+                                style="position: absolute; right: 20px; top: 25px;">
+                                <i class="fas fa-power-off"></i>
+                            </button>
+                        </form>
+                        @auth
+                            <p class="fs-2 mb-1 text-white">
+                                {{-- @dd(Auth()->user() && Auth()->user()->name) --}}
+                                {{ Auth()->user()->name }}({{ Auth()->user()->role }})
+                                <i class="bi bi-person-circle"></i>
+                            </p>
+                        @endauth
+                    </div>
+                </div>
+
+            </nav>
+        </header>
+
+    @endauth

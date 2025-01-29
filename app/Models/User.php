@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function siteMonitorings()
+    {
+        return $this->hasMany(SiteMonitoring::class, 'user_id');
+    }
 }

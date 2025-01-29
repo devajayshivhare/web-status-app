@@ -7,8 +7,12 @@
     @endif
    <div class="d-flex justify-content-between align-items-center mt-3">
     <a href="{{ route('site_monitoring.create') }}" class="btn btn-primary new-site-btn">Add New Site</a>
+    <button id="exportExcel" class="btn btn-success mb-3 excel-btn">
+        <i class="bi bi-filetype-xlsx"></i>
+        Export
+    </button>
     </div>
-   <div id="custom-buttons" class=""></div>
+   {{-- <div id="custom-buttons" class=""></div> --}}
    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
     <thead>
         <tr>
@@ -22,7 +26,8 @@
     <tbody>
         @foreach ($sites as $site)
         <tr>
-            <td class="text-start">{{$site->id}}</td>
+            {{-- <td class="text-start">{{$site->id}}</td> --}}
+            <td class="text-start">{{$loop->iteration}}</td>
             <td>{{$site->site_url}}</td>
             <td class="text-start">{{$site->task_frequency}}</td>
           @if (count($site->logs) == 0)

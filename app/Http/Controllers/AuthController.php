@@ -24,9 +24,9 @@ class AuthController extends Controller
 
         $user = User::create($attributes);
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Your account has been created.');
     }
 
     public function login_create()

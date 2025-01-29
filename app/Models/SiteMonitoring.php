@@ -12,11 +12,17 @@ class SiteMonitoring extends Model
     protected $fillable = [
         'site_url',
         'task_frequency',
+        'user_id',
     ];
 
-     // Define the relationship with SiteLog
-     public function logs()
-     {
-         return $this->hasMany(SiteLog::class);
-     }
+    // Define the relationship with SiteLog
+    public function logs()
+    {
+        return $this->hasMany(SiteLog::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

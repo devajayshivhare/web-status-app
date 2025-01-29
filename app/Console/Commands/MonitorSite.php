@@ -41,6 +41,7 @@ class MonitorSite extends Command
 
                 try {
                     $response = Http::get($site->site_url);
+                    logger("Response: {$response}");
                     $status = $response->successful() ? 'up' : 'down';
                 } catch (\Exception $e) {
                     $status = 'down';
