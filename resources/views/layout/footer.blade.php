@@ -102,15 +102,12 @@
 </script>
 <script>
     $(document).ready(function () {
-        // Initialize DataTables (Without Export Dependency)
         $('#example').DataTable();
     
-        // Custom Export to Excel (By Extracting Table Data)
         $('#exportExcel').click(function () {
-            let table = document.getElementById('example'); // Get Table
+            let table = document.getElementById('example');
             let data = [];
     
-            // Loop Through Each Row
             for (let i = 0; i < table.rows.length; i++) {
                 let row = [];
                 for (let j = 0; j < table.rows[i].cells.length; j++) {
@@ -119,12 +116,10 @@
                 data.push(row);
             }
     
-            // Convert Data to Excel Format
             let wb = XLSX.utils.book_new();
             let ws = XLSX.utils.aoa_to_sheet(data);
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     
-            // Download Excel File
             XLSX.writeFile(wb, "table_data.xlsx");
         });
     });

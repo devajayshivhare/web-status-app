@@ -33,7 +33,7 @@ Route::post('/chatbot/message', [ChatbotController::class, 'getMessage']);
 
 // Route::resource('users', UserController::class)->middleware([RoleMiddleware::class.':admin', 'auth']);
 
-Route::middleware([RoleMiddleware::class.':Admin'])->group(function () {
+Route::middleware([RoleMiddleware::class.':admin'])->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     // Route::middleware(['auth', 'role:admin'])->group(function () {
